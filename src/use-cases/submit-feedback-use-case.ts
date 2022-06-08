@@ -31,15 +31,22 @@ export class SubmitFeedUseCase {
       screenshot,
     });
 
+    const bodyEmail = [
+      `<div style="font-family: sans-serif; font-size: 20px; background-color: #F5F6F6; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center">`,
+      `<header style="margin-top: 40px;border-radius: 20px; background-color:#d3d3d3; ">`,
+      `<span style="color: #FF0000; padding: 20px">FeedBacks NLW - 8</span>`,
+      `</header>`,
+      `<p style="margin-top: 20px">Type feedback: ${type}</p>`,
+      screenshot && `<p style=" margin-top: 20px">Image:</p>`,
+      screenshot &&
+        `<img src="${screenshot}" style="width: 180px; height: 180px"/>`,
+      `<p>Comment: ${comment}</p>`,
+      `</div>`,
+    ];
+
     await this.mailAdapter.sendMail({
       subject: "New Feed Back",
-      body: [
-        `<div styles="font-family: sans-serif; font-size: 16px color: #111">`,
-        `<p>Type feedback: ${type}</p>`,
-        `<p>Comment: ${comment}</p>`,
-        screenshot ? `<img src=${screenshot} />` : ``,
-        `</div>`,
-      ].join("\n"),
+      body: bodyEmail.join("\n"),
     });
   }
 }
